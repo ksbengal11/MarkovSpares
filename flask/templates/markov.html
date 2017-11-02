@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html lang='en' xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" type="text/css" href="/static/content/site.css">
+	<meta charset="utf-8" />
+	<title>Spare equipment strategy</title>
+</head>
+
+<body>
+	<div class="header">
+		<h1> Substation equipment spares calculator </h1>
+		<div class="nav">
+			<a href = #home">Home</a>
+			<a href = "/about">About</a>
+			<a href = #contact">Contact</a>
+		</div>
+	</div>
+
+	<!-- Displaying errors from validation -->
+	<div class="errors">
+		{% if form.errors %}
+			<ul class="errors">
+				{% for field_name, field_errors in form.errors|dictsort if field_errors %}
+					{% for error in field_errors %}
+						<li>{{ form[field_name].label }} : {{ error }}</li>
+					{% endfor %}
+				{% endfor %}
+			</ul>
+		{% endif %}
+	</div>
+	
+	<div class="form">
+		<form action="" method="post">
+			{{form.csrf}}
+		
+			<!-- Form entry text area and label for units -->
+			<div class="input">
+				{{form.units.label}}
+				{{form.units}}
+			</div>
+
+			<!-- Form entry text area and label for failure rate -->
+			<div class="input">
+				{{form.failureRate.label}}
+				{{form.failureRate}}
+			</div>
+
+			<!-- Form entry text area and label for lead time and duration -->
+			<div class="input">
+				{{form.leadTime.label}}
+				{{form.leadTime}}
+				{{form.duration_leadTime.label}}
+				{{form.duration_leadTime}}
+			</div>
+
+			<!-- Form entry text area and label for installation time and duration -->
+			<div class="input">
+				{{form.installationTime.label}}
+				{{form.installationTime}}
+				{{form.duration_installationTime.label}}
+				{{form.duration_installationTime}}
+			</div>
+
+			<!-- Submit button -->
+			<div class="input submit">
+				<input type="submit" value="Submit" />
+			</div>
+		</form>
+	</div>
+
+	<div>
+		{%if result != None %}
+			<table class="PTable">
+				<tr>
+					<th class='th_head'></th>
+					<th class='th_head'>0 Spare </th>
+					<th class='th_head'>1 Spare </th>
+					<th class='th_head'>2 Spare </th>
+				</tr>
+
+				<tr>
+					<td class='col_head'>P(n)</td>
+					<td class='col'>{{result['0'][0]}}</td>
+					<td class='col'>{{result['1'][0]}}</td>
+					<td class='col'>{{result['2'][0]}}</td>
+				</tr>
+			
+
+				<tr>
+					<td class='col_head'>P(n-1)</td>
+					<td class='col'>{{result['0'][1]}}</td>
+					<td class='col'>{{result['1'][1]}}</td>
+					<td class='col'>{{result['2'][1]}}</td>
+				</tr>
+
+
+				<tr>
+					<td class='col_head'>P(n-2)</td>
+					<td class='col'>{{result['0'][2]}}</td>
+					<td class='col'>{{result['1'][2]}}</td>
+					<td class='col'>{{result['2'][2]}}</td>
+				</tr>
+			</table>
+		{% endif %}
+
+	</div>
+</body>
+</html>
